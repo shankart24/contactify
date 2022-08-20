@@ -1,6 +1,6 @@
 import { db } from "./firebase";
-import { addDoc, collection, getDocs, getDoc, doc, setDoc, deleteDoc } from "firebase/firestore";
-import { useEffect, useState, Fragment, createContext } from "react";
+import { addDoc, collection, getDocs, getDoc, doc, setDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { useEffect, useState, Fragment, createContext, useCallback } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import ChatCard from "./components/ChatCard";
 import Navbar from "./components/Navbar";
@@ -15,7 +15,7 @@ export default function App() {
 		selectedUser: "",
 		isLoading: false,
 		showContactModal: false,
-		newContactAdded: false,
+		contactUpdated: false,
 	});
 
 	async function fetchAllUsers() {
@@ -35,7 +35,7 @@ export default function App() {
 	}
 
 	const handleNewContact = () => {
-		setState((state) => ({ ...state, newContactAdded: !state.newContactAdded, showContactModal: false }));
+		setState((state) => ({ ...state, contactUpdated: !state.contactUpdated, showContactModal: false }));
 	};
 
 	useEffect(() => {
@@ -44,7 +44,7 @@ export default function App() {
 		} catch (err) {
 			console.log(err);
 		}
-	}, [state.newContactAdded]);
+	}, [state.contactUpdated]);
 
 	return (
 		<>

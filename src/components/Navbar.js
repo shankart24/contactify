@@ -47,7 +47,7 @@ export default function Navbar() {
 
 							{state.viewDropdown && (
 								<div
-									className="transition-all origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg py-1 bg-white  focus:outline-none"
+									className="transition-all origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg py-1 bg-white  focus:outline-none"
 									role="menu"
 									aria-orientation="vertical"
 									aria-labelledby="user-menu-button"

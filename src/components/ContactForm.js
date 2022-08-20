@@ -74,24 +74,46 @@ export default function ContactForm({ type, data }) {
 		}
 	};
 
-	const allLabels = {
-		fullName: "Full Name",
-		email: "Email",
-		phone: "Contact No",
-		companyName: "Company Name",
-	};
+	const allFieldsInfo = [
+		{
+			field: "fullName",
+			label: "Full Name",
+			placeholder: "Mary Jing",
+			type: "text",
+		},
+		{
+			field: "email",
+			label: "Email",
+			placeholder: "mary@gmail.com",
+			type: "email",
+		},
+		{
+			field: "phone",
+			label: "Contact No",
+			placeholder: "+222-340922",
+			type: "text",
+		},
+		{
+			field: "companyName",
+			label: "Company Name",
+			placeholder: "Aliot pvt",
+			type: "text",
+		},
+	];
 
 	return (
 		<div className=" p-2 rounded-md">
 			<form className="grid grid-cols-2 gap-x-6 gap-y-3 ">
-				{Object.keys(defaultState.newContact)?.map((field) => {
+				{allFieldsInfo?.map((info) => {
+					const { field, label, placeholder, type } = info;
 					return (
 						<div key={field} className="mb-1 sm:mb-2 col-span-2 sm:col-span-1">
 							<label htmlFor={field} className="text-sm inline-block mb-1 font-medium">
-								{allLabels[field]}
+								{label}
 							</label>
 							<input
 								required
+								placeholder={placeholder}
 								type="text"
 								className="flex-grow w-full h-12 px-4 mb-2 text-sm transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none  focus:outline-none focus:shadow-outline"
 								id={field}
@@ -102,64 +124,6 @@ export default function ContactForm({ type, data }) {
 						</div>
 					);
 				})}
-				{/* <div className="mb-1 sm:mb-2 col-span-2 sm:col-span-1">
-					<label htmlFor="fullName" className="text-sm inline-block mb-1 font-medium">
-						Full Name
-					</label>
-					<input
-						required
-						type="text"
-						className="flex-grow w-full h-12 px-4 mb-2 text-sm transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none  focus:outline-none focus:shadow-outline"
-						id="fullName"
-						name="fullName"
-						value={state.newContact.fullName}
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div className="mb-1 sm:mb-2 col-span-2 sm:col-span-1">
-					<label htmlFor="email" className="text-sm  inline-block mb-1 font-medium">
-						Email
-					</label>
-					<input
-						required
-						type="email"
-						className="flex-grow w-full h-12 px-4 mb-2 text-sm transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none  focus:outline-none focus:shadow-outline"
-						id="email"
-						name="email"
-						value={state.newContact.email}
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div className="mb-1 sm:mb-2 col-span-2 sm:col-span-1">
-					<label htmlFor="phone" className="text-sm inline-block mb-1 font-medium">
-						Contact No.
-					</label>
-					<input
-						placeholder=""
-						required
-						type="text"
-						className="appearance-none flex-grow w-full h-12 px-4 mb-2 text-sm transition duration-200 bg-white border border-gray-300 rounded shadow-sm   focus:outline-none focus:shadow-outline"
-						id="phone"
-						name="phone"
-						value={state.newContact.phone}
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div className="mb-1 sm:mb-2 col-span-2 sm:col-span-1">
-					<label htmlFor="companyName" className="text-sm inline-block mb-1 font-medium">
-						Company Name
-					</label>
-					<input
-						placeholder=""
-						required
-						type="text"
-						className="flex-grow w-full h-12 px-4 mb-2 transition text-sm duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none  focus:outline-none focus:shadow-outline"
-						id="companyName"
-						name="companyName"
-						value={state.newContact.companyName}
-						onChange={handleInputChange}
-					/>
-				</div> */}
 
 				<div className="mb-1 sm:mb-2 col-span-2">
 					{state.isLoading ? (

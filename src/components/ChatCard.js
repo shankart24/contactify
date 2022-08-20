@@ -13,9 +13,9 @@ export default function ChatCard({ chatString, currentUser }) {
 							chatString.split("___").length === 2 ? "hidden" : "visible"
 						} flex flex-col items-end w-full text-xs  font-medium text-gray-500`}
 					>
-						{/* <div className="text-xs"> {displayDate(Number(sentOn))}</div> */}
-
 						<div className="text-[0.6rem] mt-1">
+							<span className="float-right"> {displayDate(Number(sentOn))}</span>
+							<br />
 							<span className="mr-1 text-gray-900 font-medium">{author === currentUser ? "Sent:" : ""}</span>
 							{new Date(Number(sentOn)).toLocaleTimeString()}
 						</div>
