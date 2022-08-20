@@ -1,5 +1,5 @@
 import { db } from "../firebase";
-import { addDoc, collection, getDocs, getDoc, doc, setDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, getDocs, getDoc, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { useEffect, useState, Fragment, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import ChatCard from "./ChatCard";
@@ -12,31 +12,26 @@ export default function ChatSection({ email, fromEmail }) {
 	};
 	const [state, setState] = useState(defaultState);
 
-	async function fetchChatData() {
-		setState((state) => ({
-			...state,
-			isLoading: true,
-		}));
-		const docRef = doc(db, "chats", fromEmail);
-		const docSnap = await getDoc(docRef);
-		if (docSnap.exists()) {
-			const reqData = docSnap.data()?.messages[email];
-			setState((state) => ({
-				...state,
-				allMessages: reqData ?? [],
-				isLoading: false,
-			}));
-		} else {
-			setState((state) => ({
-				...state,
-				isLoading: false,
-			}));
-		}
+	function fetchMessages(type) {
+		const unsub = onSnapshot(doc(db, "chats", email), (doc) => {
+			const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+			if (source === type) {
+				const reqData = doc.data()?.messages[fromEmail];
+				setState((state) => ({
+					...state,
+					allMessages: reqData ?? [],
+					isLoading: false,
+				}));
+			}
+		});
+		return unsub;
 	}
+
+	fetchMessages("Local");
 
 	useEffect(() => {
 		try {
-			fetchChatData();
+			fetchMessages("Server");
 		} catch (err) {
 			console.log(err);
 			setState((state) => ({
